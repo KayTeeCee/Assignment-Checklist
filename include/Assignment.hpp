@@ -22,10 +22,10 @@ struct Course {
         categories = map<string,double>();
 
         letterRange = map<char, double>();
-        double min = 90.00;
+        double min = 0.90;
         for(char letter = 'A'; letter < 'E'; letter++){
             letterRange.insert_or_assign(letter, min);
-            min -= 10.0;
+            min -= 0.10;
         }
     }
 
@@ -41,6 +41,24 @@ struct Course {
         return total == 1.0;
     }
 
+    bool setLowerBound(char letter, double newLowerBound){
+        if(letter >= 'A' && letter <= 'D'){
+            double minimum = 0.00;
+            double maximum = 1.00;
+            if(letter != 'D'){
+                minimum = letterRange.at(letter + 1);
+            }
+            if(letter != 'A'){
+                maximum = letterRange.at(letter - 1);
+            }
+
+            if(minimum < newLowerBound && maximum > newLowerBound){
+                letterRange.insert_or_assign(letter, newLowerBound);
+                return true;
+            }
+        }
+        return false;
+    }
 };
 
 struct Assignment {
