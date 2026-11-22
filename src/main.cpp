@@ -1,11 +1,17 @@
 #include "Assignment.hpp"
+#include "Course.hpp"
+
+#include <iostream>
+
+using std::string;
 
 int main(){
     Course test = Course("name");
     test.setLowerBound('B', 0.850);
     for(char letter = 'A'; letter < 'E'; letter++){
-        std::cout << letter << ": " << test.letterRange.at(letter) << "\n";
+        std::cout << letter << ": " << test.letterRange[letter - 'A'] << "\n";
     }
+    
     test.addCategory("Homework", 0.25);
     test.addCategory("LeetCode", 0.20);
     test.addCategory("Midterm", 0.15);
