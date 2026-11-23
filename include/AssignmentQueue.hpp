@@ -18,12 +18,10 @@ private:
 public:
     AssignmentQueue();
 
-    void addCourse(const Course& c);
+    void addCourse(string inputName);
     bool removeCourse(const string& courseName);
     vector<Course>& getCourses();
     const vector<Course>& getCourses() const;
-    void addAssignment(Assignment a);
-    bool updateAssignment(const Assignment& oldItem, const Assignment& updatedItem);
     bool empty() const;
     Assignment popNext();
 
@@ -31,17 +29,13 @@ public:
     char getCourseLetterGrade(string name);
 
     //assignment related functions
-    void addAssignment(string courseName, string assignmentName);
+    void addAssignment(string inputCourse, string inputCategory, string inputAssignment, int value, int dueYear, int dueMonth, int dueDay);
+    bool updateAssignment(const Assignment& oldItem, const Assignment& updatedItem);
     void markDone(string assignmentName);
 
     //save/load functions
     void save();
-    void saveCourseList();
-    void saveAssignmentList();
-
     void load();
-    void loadCourseList();
-    void loadAssignmentList();
 };
 
 
