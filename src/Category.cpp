@@ -1,8 +1,8 @@
-Category(Course* currCourse, string inputName, double inputValue, int inputNumAssignments) : course(currCourse), catName(inputName), catValue(inputValue), catNumAssignments(inputNumAssignments) {}
+Category(Course* currCourse, string inputName, double inputValue) : course(currCourse), catName(inputName), catValue(inputValue) {}
 
-void addAssignment(string asName, int dueYear, int dueMonth, int dueDay)
+void addAssignment(string asName, int inputPoints, int dueYear, int dueMonth, int dueDay)
 {
-    assignments.push_back(new Assignment(asName, dueYear, dueMonth, dueDay));
+    assignments.push_back(new Assignment(asName, inputPoints, dueYear, dueMonth, dueDay));
 }
 
 void markAssignmentDone(string asName)
