@@ -4,6 +4,7 @@
 #include "Assignment.hpp"
 #include "Course.hpp"
 #include <queue>
+#include <vector>
 
 using std::priority_queue;
 
@@ -18,10 +19,15 @@ public:
         queue = std::priority_queue<Assignment>();
     }
 
-    //course related functions
-    void addCourse(string name);
-    //also remove assignments for that course
-    void deleteCourse(string name);
+    void addCourse(const Course& c);
+    bool removeCourse(const std::string& courseName);
+    std::vector<Course>& getCourses();
+    const std::vector<Course>& getCourses() const;
+    void addAssignment(Assignment a);
+    bool updateAssignment(const Assignment& oldItem, const Assignment& updatedItem);
+    bool empty() const;
+    Assignment popNext();
+
 
     void setCourseGrade(string name, double grade);
     char getCourseLetterGrade(string name);
