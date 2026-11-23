@@ -63,7 +63,7 @@ void UI::showMenu() const {
     std::cout << "6. Add an assignment\n";
     std::cout << "7. Edit an assignment\n";
     std::cout << "8. View priority list\n";
-    std::cout << "9. Mark top assignment as done\n";
+    std::cout << "9. Mark an assignment as done\n";
     std::cout << "0. Quit\n";
 }
 
@@ -76,7 +76,7 @@ void UI::addCourse() {
             return;
         }
     }
-    queue.addCourse(Course(name));
+    queue.addCourse((name));
     std::cout << "  Added " << name << ".\n";
 }
 
@@ -85,13 +85,9 @@ void UI::deleteCourse() {
     if (c == nullptr) return;
 
     std::string name = c->courseName;
-    if (queue.removeCourse(name)) {
-        std::cout << "  Deleted " << name << ".\n";
+    queue.removeCourse(name);
+    std::cout << " Deleted " << name << ".\n";
     }
-    else {
-        std::cout << "  Could not delete the course.\n";
-    }
-}
 
 void UI::showCourses() const {
     const std::vector<Course>& courses = queue.getCourses();
@@ -106,8 +102,8 @@ void UI::showCourses() const {
         first = false;
 
         std::cout << c.courseName << "\n";
-        for (const auto& cutoff : c.letterRange) {
-            std::cout << "  " << cutoff.first << " starts at " << cutoff.second * 100 << "%\n";
+        for (int i = 0; i < 4; i++) {
+            std::cout << "  " << char('A' + i) << " starts at " << c.letterRange[i] * 100 << "%\n";
         }
 
         if (c.categories.empty()) {
@@ -184,7 +180,7 @@ void UI::editLetterCutoff() {
 
     if (letter < 'A' || letter > 'D') {
         std::cout << "  Letter must be A, B, C or D.\n";
-        return;
+        return; 
     }
     double percent = getNumberInRange("New minimum percent: ", 0, 100);
 
@@ -216,19 +212,13 @@ void UI::addAssignment() {
     }
     std::cout << "\n";
     int pick = (int)getNumberInRange("Pick a category: ", 1, names.size());
-
-    Assignment a;
-    a.courseName = c->courseName;
-    a.category = names[pick - 1];
-    a.assignmentName = getNonEmptyLine("Assignment name: ");
-    a.estimatedWorth = (int)getNumberInRange("Estimated worth (points): ", 0, 100000);
-    a.priority = 0;  // set by AssignmentQueue::addAssignment
-
-    queue.addAssignment(a);
-    std::cout << "  Added " << a.assignmentName << ".\n";
+    
+    std::string name = getNonEmptyLine("Assignment name: ");
+    queue.addAssignment(c->courseName, names[pick - 1], name);
+    std::cout << " Added " << name << ".\n";
 }
 
-void UI::editAssignment() {
+void UI::editAssignment() { //Waiting on edit function 
     std::vector<Assignment> list = queue.sortedAssignments();
     if (list.empty()) {
         std::cout << "No assignments to edit.\n";
@@ -245,7 +235,6 @@ void UI::editAssignment() {
     Assignment updated = list[pick - 1];
 
     std::cout << "1. Edit name\n";
-    std::cout << "2. Edit estimated worth\n";
     int field = (int)getNumberInRange("What do you want to change? ", 1, 2);
 
     if (field == 1) {
@@ -273,15 +262,22 @@ void UI::showPriorityList() const {
     int index = 1;
     for (const auto& item : list) {
         std::cout << index++ << ". " << item.assignmentName << " (" << item.courseName << ", " << item.category << ")\n";
-        std::cout << "   Worth: " << item.estimatedWorth << " points | Priority: " << item.priority << "\n";
+        std::cout << "   Priority: " << item.priority << "\n";
     }
 }
 
 void UI::completeNext() {
-    if (queue.empty()) {
+    std::vector<Assignment> list = queue.sortedAssignments();
+    if (list.empty()) {
         std::cout << "Nothing to mark done.\n";
         return;
     }
-    Assignment a = queue.popNext();
-    std::cout << "  Done: " << a.assignmentName << " (" << a.courseName << ")\n";
+    for (size_t i = 0; i < list.size(); i++) {
+        std::cout << i + 1 << ". " << list[i].assignmentName << " (" << list[i].courseName << ")\n";
+    }
+    std::cout << "\n";
+    int pick = (int)getNumberInRange("Which one is done? ", 1, list.size());
+    Assignment chosen = list[pick - 1]; 
+    queue.markDone(chosen.courseName, chosen.assignmentName);
+    std::cout << "  Done: " << chosen.assignmentName << " (" << chosen.courseName << ")\n";
 }
