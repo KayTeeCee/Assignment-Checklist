@@ -1,6 +1,6 @@
 #include "Course.hpp"
 
-Course::Course(string name, double grade = 100.00) : letterRange{0.90,0.80,0.70,0.60}, courseName(name), currentGrade(grade) {
+Course::Course(string name, double grade = 100.00) : letterRange{0.90,0.80,0.70,0.60}, courseName(name), courseGrade(grade) {
     categories.push_back(new Category("defualt", 1.00, 0); // <- defualt 1 category for 100% (should delete once we add more)
 }
 
