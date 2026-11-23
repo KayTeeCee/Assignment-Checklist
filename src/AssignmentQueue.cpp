@@ -1,4 +1,5 @@
 #include "AssignmentQueue.hpp"
+#include <fstream>
 
 AssignmentQueue() {
     courses = vector<Course>();
@@ -70,51 +71,59 @@ void markDone(string assignmentName)
 //save/load functions
 void save()
 {
-    // Create the file variable for inputting using the file stored in "data" repository
-    ifstream inData;
+    // Create the file variable for writing using the file stored in "data" repository
+    ofstream inData;
     inData.open("data/data.csv");
 
     // Load courses and assignments in the file respectively (using the following functions)
-    this->saveCourseList();
-    this->saveAssignmentList();
+    saveCourseList(inData);
+    saveAssignmentList(inData);
 
     // Close file when we're done with it
     inData.close();
 }
 
-void saveCourseList()
+void saveCourseList(ofstream& inData)
 {
     for (Course& course : courses) {
-        
+        inData << course.courseName << ',' << course.currentGrade;
+        for (Category& category : course.categories) {
+            inData << ',' << category.name << ',' << category.value << ',' << category.numAssignments;
+        }
+        inData << '\n';
     }
 }
 
-void saveAssignmentList()
+void saveAssignmentList(ofstream& inData)
 {
-      
+    priority_queue<Assignment> queue_copy = queue;
+    inData << "Assignments:" << '\n';
+    while (!queue_copy.empty()) {
+        Assignment curr_assignment = queue_copy.popNext();
+        inData << curr_assignment.assignmentName << ',' << curr_assignment.categoryName << ',' << curr_assignment.courseName << ',' << static_cast<int>((curr_assignment.dueDate).year()) << ',' << static_cast<unsigned>((curr_assignment.dueDate).month()) << ',' << static_cast<unsigned>((curr_assignment.dueDate).day()) << '\n';
+    }
 }
-
 
 void load()
 {
-    // Create the file variable for outputting using the file stored in "data" repository
-    ofstream outData;
+    // Create the file variable for reading using the file stored in "data" repository
+    ifstream outData;
     outData.open("data/data.csv")
 
     // Load courses and assignments in the file respectively (using the following functions)
-    this->loadCourseList();
-    this->loadAssignmentList();
+    loadCourseList(outData);
+    loadAssignmentList(outData);
 
     // Close file when we're done with it
     outData.close();
 }
 
-void loadCourseList()
+void loadCourseList(ifstream& outData)
 {
       
 }
 
-void loadAssignmentList()
+void loadAssignmentList(ifstream& outData)
 {
       
 }
