@@ -81,7 +81,7 @@ void UI::addCourse() {
             return;
         }
     }
-    queue.addCourse((name));
+    queue.addCourse(name);
     cout << "  Added " << name << ".\n";
 }
 
