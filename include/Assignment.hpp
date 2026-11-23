@@ -2,7 +2,6 @@
 #define ASSIGNMENT
 
 #include <iostream>
-#include <map> // <-- are we still using map?
 #include <chrono>
 
 #include "Category.hpp"
