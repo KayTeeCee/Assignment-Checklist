@@ -17,7 +17,7 @@ struct Assignment {
 	int priority;	// <- Calculated based on other values
 
 	// Constructor
-    Assignment(string course, string name, string category, int dueYear, int dueMonth, int dueDay);
+    Assignment(string inputName, int dueYear, int dueMonth, int dueDay);
 
 	// Calculate priority based on due date, course grade, and assignment value, using custom equation
     void updatePriority();
