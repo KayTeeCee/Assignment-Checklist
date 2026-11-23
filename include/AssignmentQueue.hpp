@@ -16,10 +16,7 @@ private:
     priority_queue<Assignment> queue;
 
 public:
-    AssignmentQueue(){
-        courses = vector<Course>();
-        queue = priority_queue<Assignment>();
-    }
+    AssignmentQueue();
 
     void addCourse(const Course& c);
     bool removeCourse(const string& courseName);
