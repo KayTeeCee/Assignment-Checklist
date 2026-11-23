@@ -13,6 +13,7 @@ struct Assignment {
 	string courseName;  // <- Course it is contained in
 	string categoryName;	// <- Category it is contained in
     std::chrono::year_month_day dueDate;	// <- Stored as (year, month, day)
+	bool is_done;
 	int priority;	// <- Calculated based on other values
 
 	// Constructor
