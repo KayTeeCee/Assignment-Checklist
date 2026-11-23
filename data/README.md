@@ -11,7 +11,7 @@ Data Structures,92.5,Assignments,0.25,LeetCode,0.20,Midterm,0.15,Project,0.20,Fi
 
 ## Assignment data
 Assignments are formatted as:
-<COURSE_NAME>,<ASSIGNMENT_NAME>,<CATEGORY>,<DUE_YEAR>,<DUE_MONTH>,<DUE_DAY>
+<COURSE_NAME>,<CATEGORY_NAME>,<ASSIGNMENT_NAME>,<DUE_YEAR>,<DUE_MONTH>,<DUE_DAY>
 
 ### Example
-Data Structures,LeetCode 1,LeetCode,2026,8,26
+Data Structures,LeetCode,LeetCode 1,2026,8,26
