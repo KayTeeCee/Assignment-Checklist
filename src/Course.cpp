@@ -5,7 +5,7 @@ void Course::addCategory(string name, double points){
 }
 
 void Course::removeCategory(string name){
-
+    
 }
 
 bool Course::verifyCategories(){

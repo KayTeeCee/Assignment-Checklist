@@ -13,14 +13,19 @@ private:
     priority_queue<Assignment> queue;
 
 public:
+    AssignmentQueue(){
+        courses = std::vector<Course>();
+        queue = std::priority_queue<Assignment>();
+    }
 
     //course related functions
     void addCourse(string name);
     //also remove assignments for that course
     void deleteCourse(string name);
+
     void setCourseGrade(string name, double grade);
     char getCourseLetterGrade(string name);
-
+     
 
 
 
@@ -28,6 +33,15 @@ public:
     void addAssignment(string courseName, string assignmentName);
     void markDone(string assignmentName);
 
+
+    //save/load functions
+    void save();
+    void saveCourseList();
+    void saveAssignmentList();
+
+    void load();
+    void loadCourseList();
+    void loadAssignmentList();
 };
 
 
