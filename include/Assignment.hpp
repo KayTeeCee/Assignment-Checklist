@@ -9,15 +9,14 @@ using std::string;
 using std::map;
 
 struct Assignment {
-	string assignmentName;	// <- Name of this assignment
-	string courseName;  // <- Course it is contained in
-	string categoryName;	// <- Category it is contained in
+	string asName;	// <- Name of this assignment
+	int asValue;	// <- in points
     std::chrono::year_month_day dueDate;	// <- Stored as (year, month, day)
-	bool is_done;
+	bool is_done;	// <- whether the assignment has been completed or not (for course grade calculation)
 	int priority;	// <- Calculated based on other values
 
 	// Constructor
-    Assignment(string inputName, int dueYear, int dueMonth, int dueDay);
+    Assignment(string inputName, int inputValue, int dueYear, int dueMonth, int dueDay);
 
 	// Calculate priority based on due date, course grade, and assignment value, using custom equation
     void updatePriority();
