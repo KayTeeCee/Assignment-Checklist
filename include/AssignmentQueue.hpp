@@ -41,6 +41,10 @@ public:
     void addAssignment(string courseName, string assignmentName);
     void markDone(string assignmentName);
 
+    // TO DO
+    // For UI to delete an assignment. Removes assignment from its category and queue. Returns false if not found
+    bool removeAssignment(const string& courseName, const string& categoryName, const string& assignmentName); 
+
     //save/load functions
     void save();
     void saveCourseList();
