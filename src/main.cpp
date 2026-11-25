@@ -1,12 +1,18 @@
 #include <iostream>
-#include "UI.hpp"
+#include "Ui.hpp"
+#include "AssignmentQueue.hpp"
 
 using std::string;
 
 int main() 
 {
-    UI program;
+    // Create Q
+    AssignmentQueue myQ;
 
+    // Create UI object
+    UI program(myQ);
+
+    // Run program
     program.run();
 
     return 0;
