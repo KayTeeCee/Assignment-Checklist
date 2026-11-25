@@ -1,49 +1,51 @@
 #include "AssignmentQueue.hpp"
 #include <fstream>
 
-AssignmentQueue() {
-    courses = vector<Course>();
-    queue = priority_queue<Assignment>();
+AssignmentQueue::AssignmentQueue() {
+    courses = vector<Course*>();
+    queue = priority_queue<Assignment*>();
 }
 
-void addCourse(string inputName)
+void AssignmentQueue::addCourse(const string& inputName)
 {
+    //dont add duplicate course names
+    if(findCourse(inputName) != -1) return;
     courses.push_back(new Course(inputName));
 }
 
-bool removeCourse(const std::string& courseName)
+bool AssignmentQueue::removeCourse(const string& courseName)
 {
-    std::erase_if(courses, [&](const Category& courses) {return courses.courseName == courseName;});
+    int i = findCourse(courseName);
+    while(i != -1){
+        Course* del = courses.at(i);
+        courses.erase(courses.begin()+i);
+        delete del;
+    }
 }
 
-vector<Course>& getCourses()
+vector<Course*>& AssignmentQueue::getCourses()
 {
     return courses;
 }
 
-const vector<Course>& getCourses() const
-{
-    return courses;
-}
-
-bool empty() const
+bool AssignmentQueue::empty() const
 {
     
 }
 
-Assignment popNext()
+Assignment AssignmentQueue::popNext()
 {
     Assignment to_return = queue.top();
     queue.pop();
     return to_return;
 }
 
-void setCourseGrade(string name, double grade)
+void AssignmentQueue::setCourseGrade(string name, double grade)
 {
     
 }
 
-char getCourseLetterGrade(string name)
+char AssignmentQueue::getCourseLetterGrade(string name)
 {
      // Find correct course
     for (Course& course, courses) {
@@ -56,7 +58,7 @@ char getCourseLetterGrade(string name)
 }
      
 //assignment related functions
-void addAssignment(string inputCourse, string inputCategory, string inputAssignment, int value, int dueYear, int dueMonth, int dueDay)
+void AssignmentQueue::addAssignment(string inputCourse, string inputCategory, string inputAssignment, int value, int dueYear, int dueMonth, int dueDay)
 {
     // Find correct course
     for (Course& course, courses) {
@@ -75,12 +77,12 @@ void addAssignment(string inputCourse, string inputCategory, string inputAssignm
     }
 }
 
-bool updateAssignment(const Assignment& oldItem, const Assignment& updatedItem)
+bool AssignmentQueue::updateAssignment(const Assignment& oldItem, const Assignment& updatedItem)
 {
     // Use similary code from addAssignment (find assignment to edit using name, then update the rest of the values)
 }
     
-void markDone(string courseName, string categoryName, string assignmentName)
+void AssignmentQueue::markDone(string courseName, string categoryName, string assignmentName)
 {
     // Find correct course
     for (Course& course, courses) {
@@ -100,7 +102,7 @@ void markDone(string courseName, string categoryName, string assignmentName)
 }
 
 //save/load functions
-void save()
+void AssignmentQueue::save()
 {
     // Create the file variable for writing using the file stored in "data" repository
     ofstream inData("data/data.csv");
@@ -122,7 +124,7 @@ void save()
     inData.close();
 }
 
-void load()
+void AssignmentQueue::load()
 {
     // Create the file variable for reading using the file stored in "data" repository
     ifstream outData("data/data.csv");

@@ -6,6 +6,7 @@ Assignment::Assignment(string name, Category *category, int dueDate[3]){
 	dueDate[0] = dueDate[0];
 	dueDate[1] = dueDate[1];
 	dueDate[2] = dueDate[2];
+	points = 10;
 	priority = 0;
 	isComplete = false;
 	updatePriority();

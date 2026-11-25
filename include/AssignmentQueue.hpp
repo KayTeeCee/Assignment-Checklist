@@ -11,23 +11,31 @@ using std::string;
 
 class AssignmentQueue {
 private:
-    vector<Course> courses;
-    priority_queue<Assignment> queue;
+    vector<Course*> courses;
+    priority_queue<Assignment*> queue;
 
 public:
     AssignmentQueue();
 
-    void addCourse(const Course& c);
+    void addCourse(const string& name);
     bool removeCourse(const string& courseName);
-    vector<Course>& getCourses();
-    const vector<Course>& getCourses() const;
+    void renameCourse(const string& currentName, const string& newName);
+    void setCourseGrade(const string& name, double grade);
+    void setCourseLetterGrade(const string& name, char letter, int newLowerBound);
+    char getCourseLetterGrade(const string& name);
+    void deleteCourse(const string& name);
+    void addOrEditCategory(const string& course, const string& category, double value);
+
+    
+    vector<Course*>& getCourses();
+    int findCourse(string name);
+
     void addAssignment(Assignment a);
-    bool updateAssignment(const Assignment& oldItem, const Assignment& updatedItem);
+    bool updateAssignment(Assignment* oldItem, const Assignment* updatedItem);
     bool empty() const;
     Assignment popNext();
 
-    void setCourseGrade(string name, double grade);
-    char getCourseLetterGrade(string name);
+    
 
     //assignment related functions
     void addAssignment(string courseName, string assignmentName);

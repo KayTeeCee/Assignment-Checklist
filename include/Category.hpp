@@ -10,7 +10,7 @@ using std::string;
 
 struct Category {
     string name;
-    double value; // % out of 1.0
+    double value; // % out of 100.0
     std::vector<Assignment*> assignments; // store all assignments within category
     Category(string inputName, double inputValue) : name(inputName), value(inputValue) {
         assignments = std::vector<Assignment*>();

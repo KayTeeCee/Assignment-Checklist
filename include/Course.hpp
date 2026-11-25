@@ -11,7 +11,7 @@ using std::vector;
 struct Course {
 	string courseName;		// <- Stores the types of assignments in the course
 	double currentGrade;	// <- Current grade of the class in % up to 100
-	vector<Category*> categories; // <- Stores the portion of the total grade each category is worth, up to 1.0
+	vector<Category*> categories; // <- Stores the portion of the total grade each category is worth, up to 100.00
     double letterRange[4];  // <- Stores the lower bound of each letter grade
 
 	// Constructor

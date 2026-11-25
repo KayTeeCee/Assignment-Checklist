@@ -1,7 +1,7 @@
 #include "Course.hpp"
 
-Course::Course(string name, double grade = 100.00) : letterRange{0.90,0.80,0.70,0.60}, courseName(name), currentGrade(grade) {
-    categories.push_back(new Category("default", 1.00)); // <- defualt 1 category for 100% (overwrite once we add more)
+Course::Course(string name, double grade = 100.00) : letterRange{90.0,80.0,70.0,60.0}, courseName(name), currentGrade(grade) {
+    categories.push_back(new Category("default", 100.0)); // <- defualt 1 category for 100% (overwrite once we add more)
 }
 
 //O(n)
@@ -42,13 +42,13 @@ bool Course::verifyCategories(){
             //iterate through categories
             total += category->value;
         }
-        return total == 1.0;
+        return total == 100.0;
 }
 
 bool Course::setLowerBound(char letter, double newLowerBound){
         if(letter >= 'A' && letter <= 'D'){
             double minimum = 0.00;
-            double maximum = 1.00;
+            double maximum = 100.0;
             if(letter != 'D'){
                 minimum = letterRange[letter + 1 - 'A'];
             }
