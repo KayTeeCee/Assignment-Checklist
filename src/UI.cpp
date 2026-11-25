@@ -37,39 +37,99 @@ double getNumberInRange(const string& prompt, double low, double high) {
 }
 
 void UI::run() {
-    int choice = -1;
-    while (choice != 0) {
+    doMenu();
+}
+
+// Show Main Menu
+void UI::showMenu() const {
+    cout << "-------------------------------\n";
+    cout << "1. Course Options\n";
+    cout << "2. Assignment Options\n";
+    cout << "3. View Priority List\n";
+    cout << "4. Manually Save\n";
+    cout << "0. Quit\n";
+    cout << "-------------------------------\n";
+}
+
+// Do Main Menu
+void UI::doMenu() {
+    do {
         showMenu();
-        choice = (int)getNumberInRange("Choose an option: ", 0, 9);
+        int choice = (int)getNumberInRange("Choose an option: ", 0, 4);
+        cout << "\n";
+
+        switch (choice) {
+        case 1: doCourseOptions(); break;
+        case 2: doAssignmentOptions(); break;
+        case 3: viewPriorityList(); break;
+        case 4: saveManually(); break;
+        case 0: break;
+        }
+
+        std::cout << "\n";
+    } while (1);
+}
+
+// Course Options
+void UI::showCourseOptions() const {
+    cout << "-------------------------------\n";
+    cout << "1. Add a course\n";
+    cout << "2. Delete a course\n";
+    cout << "3. Edit a course\n";
+    cout << "4. View courses\n";
+    cout << "5. Back to Main Menu\n";
+    cout << "-------------------------------\n";
+}
+
+// Do Course Options
+void UI::doCourseOptions() {
+    do {
+        showCourseOptions();
+        int choice = (int)getNumberInRange("Choose an option: ", 1, 5);
         cout << "\n";
 
         switch (choice) {
         case 1: addCourse(); break;
         case 2: deleteCourse(); break;
-        case 3: showCourses(); break;
-        case 4: addCategory(); break;
-        case 5: editLetterCutoff(); break;
-        case 6: addAssignment(); break;
-        case 7: editAssignment(); break;
-        case 8: showPriorityList(); break;
-        case 9: completeNext(); break;
-        case 0: break;
+        case 3: editCourse(); break;
+        case 4: viewCourses(); break;
+        case 5: doMenu(); break;
         }
+
         std::cout << "\n";
-    }
+    } while (1);
 }
 
-void UI::showMenu() const {
-    cout << "1. Add a course\n";
-    cout << "2. Delete a course\n";
-    cout << "3. View courses\n";
-    cout << "4. Add a grade category\n";
-    cout << "5. Change a letter grade cutoff\n";
-    cout << "6. Add an assignment\n";
-    cout << "7. Edit an assignment\n";
-    cout << "8. View priority list\n";
-    cout << "9. Mark an assignment as done\n";
-    cout << "0. Quit\n";
+// Assignment Options
+void UI::showAssignmentOptions() const {
+    cout << "-------------------------------\n";
+    cout << "1. Add an assignment\n";
+    cout << "2. Delete an assignment\n";
+    cout << "3. Edit an assignment\n";
+    cout << "4. View assignments\n";
+    cout << "5. Mark assignment as done\n";
+    cout << "6. Back to Main Menu\n";
+    cout << "-------------------------------\n";
+}
+
+// Do Assignment Options
+void UI::doAssignmentOptions() {
+    do {
+        showAssignmentOptions();
+        int choice = (int)getNumberInRange("Choose an option: ", 1, 6);
+        cout << "\n";
+
+        switch (choice) {
+        case 1: addAssignment(); break;
+        case 2: deleteAssignment(); break;
+        case 3: editAssignment(); break;
+        case 4: viewAssignments(); break;
+        case 5: markAssignmentDone(); break;
+        case 6: doMenu(); break;
+        }
+
+        std::cout << "\n";
+    } while (1);
 }
 
 void UI::addCourse() {
@@ -92,9 +152,66 @@ void UI::deleteCourse() {
     string name = c->courseName;
     queue.removeCourse(name);
     cout << " Deleted " << name << ".\n";
-    }
+}
 
-void UI::showCourses() const {
+void UI::editCourse() {
+    Course* c = chooseCourse();
+    if (c == nullptr) return;
+
+    doCourseEditOptions(c);
+
+    // TO DO
+}
+
+void UI::showCourseEditOptions() const {
+    cout << "-------------------------------\n";
+    cout << "1. Change this course name\n";
+    cout << "2. Change the current grade for this course\n";
+    cout << "3. Course Category Options\n";
+    cout << "4. Edit Grade Ranges\n";
+    cout << "5. Back\n";
+    cout << "-------------------------------\n";
+}
+
+void UI::doCourseEditOptions(Course* c) {
+    do {
+        showCourseEditOptions();
+        int choice = (int)getNumberInRange("Choose an option: ", 1, 5);
+        cout << "\n";
+
+        switch (choice) {
+        case 1: editCourseName(c); break;
+        case 2: editCourseGrade(c); break;
+        case 3: editGradeRange(c); break;
+        case 4: categoryOptions(c); break;
+        case 5: doCourseOptions(); break; // Go back up one menu
+        }
+
+        std::cout << "\n";
+    } while (1);
+}
+
+void UI::editCourseName(Course* c) {
+    string new_name = getNonEmptyLine("New course name: ");
+    c->courseName = new_name;
+}
+
+void UI::editCourseGrade(Course* c) {
+    double new_grade = stod(getNonEmptyLine("New course grade in percent (XX.XX): "));
+    c->currentGrade = new_grade;
+}
+
+void UI::editGradeRange(Course* c) {
+    char new_grade = getNonEmptyLine("Grade you want to change bound for: ").at(0);
+    double new_percent_value = stod(getNonEmptyLine("New Percent Value for chosen grade (XX.XX): "));
+    c->setLowerBound(new_grade, new_percent_value);
+}
+
+void UI::categoryOptions(Course* c) {
+    // TO DO
+}
+
+void UI::viewCourses() const {
     const vector<Course>& courses = queue.getCourses();
     if (courses.empty()) {
         cout << "No courses yet.\n";
@@ -143,6 +260,7 @@ void UI::addCategory() {
 
     string name = getNonEmptyLine("Category name: ");
 
+                    // count doesn't work
     if (c->categories.count(name) > 0) {
         cout << "  This category already exists in " << c->courseName << ".\n";
         return;
@@ -185,13 +303,13 @@ void UI::editLetterCutoff() {
 
     if (letter < 'A' || letter > 'D') {
         cout << "  Letter must be A, B, C or D.\n";
-        return; 
+        return;
     }
     double percent = getNumberInRange("New minimum percent: ", 0, 100);
 
     // Makes sure grade cutoffs stay in descending order.
     if (c->setLowerBound(letter, percent / 100.0)) {
-       cout << "  Updated.\n";
+        cout << "  Updated.\n";
     }
     else {
         cout << "  Not updated, it has to stay between the letters above and below it.\n";
@@ -217,14 +335,18 @@ void UI::addAssignment() {
     }
     cout << "\n";
     int pick = (int)getNumberInRange("Pick a category: ", 1, names.size());
-    
+
     string name = getNonEmptyLine("Assignment name: ");
-    queue.addAssignment(c->courseName, names[pick - 1], name);
+    queue.addAssignment(c->courseName, names[pick - 1], name); // Change based on new names for structs
     cout << " Added " << name << ".\n";
 }
 
-void UI::editAssignment() { //Waiting on edit function 
-    vector<Assignment> list = queue.sortedAssignments();
+void UI::deleteAssignment() {
+    // TO DO
+}
+
+void UI::editAssignment() { // Waiting on edit function 
+    vector<Assignment> list = queue.sortedAssignments(); // Change based on new names for structs
     if (list.empty()) {
         cout << "No assignments to edit.\n";
         return;
@@ -233,7 +355,7 @@ void UI::editAssignment() { //Waiting on edit function
     cout << "Assignments:\n";
     for (size_t i = 0; i < list.size(); i++) {
         cout << i + 1 << ". " << list[i].assignmentName << " (" << list[i].courseName << ", " << list[i].category << ")\n";
-    }
+    }                                                                //        ^ Change based on new names for structs
     cout << "\n";
 
     int pick = (int)getNumberInRange("Pick an assignment: ", 1, list.size());
@@ -247,7 +369,7 @@ void UI::editAssignment() { //Waiting on edit function
     }
     else {
         updated.estimatedWorth = (int)getNumberInRange("New estimated worth (points): ", 0, 100000);
-    }
+    } //            ^ Change based on new names for structs
 
     if (queue.updateAssignment(list[pick - 1], updated)) {
         cout << "  Updated " << updated.assignmentName << ".\n";
@@ -257,9 +379,17 @@ void UI::editAssignment() { //Waiting on edit function
     }
 }
 
-void UI::showPriorityList() const {
+void UI::viewAssignments() const {
+    // TO DO
+}
+
+void UI::markAssignmentDone() {
+
+}
+
+void UI::viewPriorityList() const {
     vector<Assignment> list = queue.sortedAssignments();
-    if (list.empty()) {
+    if (list.empty()) {              // ^ Change based on new names for structs
         cout << "Nothing to do.\n";
         return;
     }
@@ -267,22 +397,28 @@ void UI::showPriorityList() const {
     int index = 1;
     for (const auto& item : list) {
         cout << index++ << ". " << item.assignmentName << " (" << item.courseName << ", " << item.category << ")\n";
-        cout << "   Priority: " << item.priority << "\n";
+        cout << "   Priority: " << item.priority << "\n";                // ^ Change based on new names for structs
     }
+}
+
+void UI::saveManually() {
+    // TO DO
 }
 
 void UI::completeNext() {
     vector<Assignment> list = queue.sortedAssignments();
-    if (list.empty()) {
+    if (list.empty()) {                  // ^ Change based on new names for structs
         cout << "Nothing to mark done.\n";
         return;
     }
     for (size_t i = 0; i < list.size(); i++) {
         cout << i + 1 << ". " << list[i].assignmentName << " (" << list[i].courseName << ")\n";
-    }
+    }                                                                        // ^ Change based on new names for structs
     cout << "\n";
     int pick = (int)getNumberInRange("Which one is done? ", 1, list.size());
-    Assignment chosen = list[pick - 1]; 
-    queue.markDone(chosen.courseName, chosen.assignmentName);
+    Assignment chosen = list[pick - 1];
+    queue.markDone(chosen.courseName, chosen.assignmentName);  // <- Change based on new names for structs
+                             // ^ Change based on new names for structs
     cout << "  Done: " << chosen.assignmentName << " (" << chosen.courseName << ")\n";
+                                                                //  ^ Change based on new names for structs
 }
