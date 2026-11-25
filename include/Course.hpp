@@ -18,9 +18,12 @@ struct Course {
     // No default name, grade defaults to 100.00, letter ranges default to 90-60%, decrementing in 10s, categories defaults to Assignments at 100%
     Course(string name, double grade = 100.00);
     
-    void addCategory(string name, double points);
+    void addOrEditCategory(string name, double points);
     void removeCategory(string name);
     bool verifyCategories();
     bool setLowerBound(char letter, double newLowerBound);
+
+    //returns -1, or index of category name
+    int findCategory(string name);
 };
 #endif

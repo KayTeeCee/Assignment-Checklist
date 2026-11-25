@@ -15,5 +15,13 @@ struct Category {
     Category(string inputName, double inputValue) : name(inputName), value(inputValue) {
         assignments = std::vector<Assignment*>();
     }
+    ~Category(){
+        //delete all assignments
+        while(!assignments.empty()){
+            Assignment* cur = assignments.back();
+            assignments.pop_back();
+            delete cur;
+        }
+    }
 };
 #endif

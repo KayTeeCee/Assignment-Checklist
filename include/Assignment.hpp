@@ -22,6 +22,8 @@ struct Assignment {
 	// Calculate priority based on due date, course grade, and assignment value, using custom equation
     void updatePriority();
 
+    
+
     // Overload assignment operators to use priority value for priority queue
     friend bool operator< (Assignment& lhs, Assignment& rhs);
     friend bool operator== (Assignment& lhs, Assignment& rhs);
