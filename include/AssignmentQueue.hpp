@@ -42,6 +42,9 @@ public:
     void markDone(string assignmentName);
 
     // TO DO
+    // Need to sort assignments for priority list, edit, mark done, and delete
+    vector<Assignment> sortedAssignments() const;
+
     // For UI to delete an assignment. Removes assignment from its category and queue. Returns false if not found
     bool removeAssignment(const string& courseName, const string& categoryName, const string& assignmentName); 
 
