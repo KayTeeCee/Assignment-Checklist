@@ -11,7 +11,7 @@ public:
 private:
     AssignmentQueue& queue;
 
-////// Main Menu ///////////////////////////
+    ////// Main Menu ///////////////////////////
     void showMenu() const;
     void doMenu();
     void viewPriorityList() const;
@@ -26,14 +26,18 @@ private:
     // Options
     void addCourse(); // 1
     void deleteCourse(); // 2
-    void editCourse(); // 3 TO DO
+    void editCourse(); // 3 
     void showCourseEditOptions() const;
     void doCourseEditOptions(Course* c);
 
     void editCourseName(Course* c);
     void editCourseGrade(Course* c);
     void editGradeRange(Course* c);
-    void categoryOptions(Course* c); // TO DO
+
+    void showCategoryOptions() const;
+    void categoryOptions(Course* c); 
+    void addCategory(Course* c);
+    void removeCategory(Course* c);
 
     void viewCourses() const; // 4
     // Back to Main Menu 5
@@ -42,16 +46,11 @@ private:
     void showAssignmentOptions() const;
     void doAssignmentOptions();
 
-    // Options
-    void addCategory();
-    void editLetterCutoff();
-
     void addAssignment();
     void deleteAssignment();
     void editAssignment();
     void viewAssignments() const;
     void markAssignmentDone();
-    void completeNext();
 
     // Back to Main Menu
 
