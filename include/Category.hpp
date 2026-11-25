@@ -1,15 +1,19 @@
 #ifndef CATEGORY
 #define CATEGORY
 
+#include "Assignment.hpp"
 #include <iostream>
-#include <string>
+#include <vector>
+
 
 using std::string;
 
 struct Category {
     string name;
-    double value;
-    int numAssignments;
-    Category(string inputName, double inputValue, int inputNumAssignments) : name(inputName), value(inputValue), numAssignments(inputNumAssignments) {}
+    double value; // % out of 1.0
+    std::vector<Assignment*> assignments; // store all assignments within category
+    Category(string inputName, double inputValue) : name(inputName), value(inputValue) {
+        assignments = std::vector<Assignment*>();
+    }
 };
 #endif

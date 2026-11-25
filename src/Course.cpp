@@ -1,7 +1,7 @@
 #include "Course.hpp"
 
 Course::Course(string name, double grade = 100.00) : letterRange{0.90,0.80,0.70,0.60}, courseName(name), currentGrade(grade) {
-    categories.push_back(new Category("defualt", 1.00, 0); // <- defualt 1 category for 100% (should delete once we add more)
+    categories.push_back(new Category("default", 1.00, 0)); // <- defualt 1 category for 100% (should delete once we add more)
 }
 
 void Course::addCategory(string name, double points){
@@ -10,7 +10,7 @@ void Course::addCategory(string name, double points){
         categories.pop_back();
     }
     // Add the category we want to add to the vector of categories
-    categories.push_back(new Category(name, points, 0);
+    categories.push_back(new Category(name, points, 0));
 }
 
 void Course::removeCategory(string name){

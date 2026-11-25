@@ -2,21 +2,22 @@
 #define ASSIGNMENT
 
 #include <iostream>
-#include <map> // <-- are we still using map?
 #include <chrono>
 
+struct Category;
+struct Course;
+
 using std::string;
-using std::map;
 
 struct Assignment {
 	string assignmentName;	// <- Name of this assignment
-	string courseName;  // <- Course it is contained in
-	string categoryName;	// <- Category it is contained in
-    std::chrono::year_month_day dueDate;	// <- Stored as (year, month, day)
+	Category *category;	// <- Category it is contained in
+    int dueDate[3];	// <- Stored as (year, month, day)
 	int priority;	// <- Calculated based on other values
+    bool isComplete;
 
 	// Constructor
-    Assignment(string course, string name, string category, int dueYear, int dueMonth, int dueDay);
+    Assignment(string name, Category *category, int dueDate[3]);
 
 	// Calculate priority based on due date, course grade, and assignment value, using custom equation
     void updatePriority();

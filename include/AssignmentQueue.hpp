@@ -1,7 +1,6 @@
 #ifndef ASSIGNMENT_QUEUE
 #define ASSIGNMENT_QUEUE
 
-#include "Assignment.hpp"
 #include "Course.hpp"
 #include <queue>
 #include <vector>
